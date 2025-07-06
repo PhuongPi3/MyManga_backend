@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const syncMangaDex = require('./cron/syncMangaDex');
 
 // Load env
 dotenv.config();
@@ -22,15 +21,15 @@ app.use('/api/user', require('./routes/user.routes'));
 app.use('/api/comment', require('./routes/comment.routes'));
 app.use('/api/genre', require('./routes/genre.routes'));
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
-
-// Cron Job
-require('./cron/syncMangaDex');
-
-
-//erorr 
+// Error middleware
 const { errorHandler } = require('./middleware/error.middleware');
 app.use(errorHandler);
 
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+
+  // 👇 Chỉ chạy cron 1 lần ở đây!
+  require('./cron/syncMangaDex');
+});
