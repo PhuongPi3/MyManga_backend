@@ -33,6 +33,4 @@ require('./cron/syncMangaDex');
 const { errorHandler } = require('./middleware/error.middleware');
 app.use(errorHandler);
 
-
-require('./cron/crawler');
 require('./cron/syncMangaDex'); // 🎯 Chỉ cần require!

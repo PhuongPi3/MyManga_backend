@@ -1,56 +1,62 @@
 const axios = require('axios');
-const Manga = require('../models/Manga');
 const cron = require('node-cron');
+const Manga = require('../models/Manga.js'); 
 
-// 📌 MangaDex API base
-const BASE_URL = 'https://api.mangadex.org/manga';
-
-// ✅ Hàm crawl 1 lần
-const syncManga = async () => {
-  console.log('🔄 [CRON] Bắt đầu sync manga từ MangaDex...');
-
+const crawlMangaDex = async () => {
+  console.log('🔄 [CRON] Bắt đầu crawl MangaDex...');
   try {
-    const response = await axios.get(BASE_URL, {
+    const response = await axios.get('https://api.mangadex.org/manga', {
       params: {
         limit: 20,
-        includes: ['author', 'artist', 'cover_art'],
-        order: { updatedAt: 'desc' }
+        offset: 0,
+        availableTranslatedLanguage: 'en',
+        'order[latestUploadedChapter]': 'desc'
       },
       headers: {
-        'User-Agent': 'MyMangaApp/1.0 (https://yourdomain.com)',
+        'User-Agent': 'MyMangaApp/1.0 (https://yourdomain.com) Contact: admin@yourdomain.com',
         'Accept': 'application/json'
       }
     });
 
     const mangas = response.data.data;
+    console.log(`ℹ️ [CRON] Tìm thấy ${mangas.length} manga`);
 
-    // 📌 Duyệt list và lưu vào DB
-    for (const m of mangas) {
-      const title = m.attributes.title.en || 'No Title';
-      const desc = m.attributes.description.en || '';
-      const mangaId = m.id;
+    for (const item of mangas) {
+      const id = item.id;
+      const title = item.attributes.title.en || 'No title';
+      const description = item.attributes.description.en || '';
+      const cover = item.relationships.find(r => r.type === 'cover_art');
 
-      await Manga.findOneAndUpdate(
-        { mangaId },
+      const coverUrl = cover
+        ? `https://uploads.mangadex.org/covers/${id}/${cover.attributes.fileName}.256.jpg`
+        : '';
+
+      await Manga.updateOne(
+        { mangaDexId: id }, // 👈 Đúng filter
         {
-          mangaId,
+          mangaDexId: id,
           title,
-          description: desc
+          description,
+          coverUrl
         },
-        { upsert: true, new: true }
+        { upsert: true, strict: true }
       );
+
+      console.log(`✅ [CRON] Synced: ${title} (${id})`);
     }
 
-    console.log(`✅ [CRON] Đã sync ${mangas.length} manga.`);
+    console.log(`🎉 [CRON] Crawl MangaDex OK! Đã sync ${mangas.length} manga ✅`);
   } catch (err) {
-    console.error('❌ [CRON] Lỗi crawl:', err.message);
+    if (err.response) {
+      console.error('[CRON] MangaDex API lỗi:', err.response.status, err.response.data);
+    } else {
+      console.error('[CRON] Lỗi crawl:', err);
+    }
   }
 };
 
-// ✅ Tạo job chạy mỗi 6 tiếng (tuân thủ rate limit)
-cron.schedule('0 */6 * * *', () => {
-  syncManga();
-});
+// Cron job mỗi 30 phút
+cron.schedule('*/30 * * * *', crawlMangaDex);
+console.log('⏰ [CRON] Scheduler đã bật!');
 
-// ✅ Lần đầu chạy ngay khi server khởi động
-syncManga();
+module.exports = crawlMangaDex;

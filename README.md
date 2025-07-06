@@ -14,21 +14,30 @@
 
 manga-backend/
 
+
 ├── server.js
+
 
 ├── config/db.js
 
+
 ├── routes/
+
 
 ├── controllers/
 
+
 ├── models/
+
 
 ├── middleware/
 
+
 ├── cron/
 
+
 ├── .env
+
 
 ├── package.json
 
