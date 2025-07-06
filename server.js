@@ -13,7 +13,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// ✅ ROUTES
+app.get('/api/ping', (req, res) => {
+  res.send('pong 🏓');
+});
+
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/manga', require('./routes/manga.routes'));
 app.use('/api/chapter', require('./routes/chapter.routes'));
@@ -21,15 +25,14 @@ app.use('/api/user', require('./routes/user.routes'));
 app.use('/api/comment', require('./routes/comment.routes'));
 app.use('/api/genre', require('./routes/genre.routes'));
 
-// Error middleware
+// ✅ ERROR HANDLER
 const { errorHandler } = require('./middleware/error.middleware');
 app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+// ✅ CRON
+const crawlMangaDex = require('./cron/syncMangaDex');
+crawlMangaDex.start();
 
-  // 👇 Chỉ chạy cron 1 lần ở đây!
-  require('./cron/syncMangaDex');
-});
+// ✅ SERVER
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
