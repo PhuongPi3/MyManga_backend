@@ -51,7 +51,7 @@ exports.filterManga = async (req, res) => {
     const { data } = await axios.get('https://api.mangadex.org/manga', {
       params: {
         status,
-        includedTags: tags // Array genre ID
+        includedTags: tags 
       }
     });
     res.json(data);
@@ -82,7 +82,7 @@ exports.recommendManga = async (req, res) => {
   res.json(mangas);
 };
 
-// Thêm vào manga.controller.js
+
 exports.getMangaByGenre = async (req, res) => {
   try {
     const { genreId } = req.params;

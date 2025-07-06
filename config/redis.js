@@ -1,4 +1,3 @@
-// config/redis.js
 const Redis = require('ioredis');
 
 let redisClient;
