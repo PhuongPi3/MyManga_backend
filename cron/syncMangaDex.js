@@ -10,7 +10,7 @@ const crawlMangaDex = async () => {
         limit: 20,
         offset: 0,
         availableTranslatedLanguage: 'en',
-        order: { latestUploadedChapter: 'desc' }
+        order: { latestUploadedChapter: 'desc' } 
       },
       headers: {
         'User-Agent': 'MyMangaApp/1.0',
