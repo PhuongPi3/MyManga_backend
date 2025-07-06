@@ -10,7 +10,7 @@ const crawlMangaDex = async () => {
         limit: 20,
         offset: 0,
         availableTranslatedLanguage: 'en',
-        order: { latestUploadedChapter: 'desc' } 
+        order: { latestUploadedChapter: 'desc' }
       },
       headers: {
         'User-Agent': 'MyMangaApp/1.0',
@@ -37,6 +37,16 @@ const crawlMangaDex = async () => {
         { upsert: true }
       );
 
+      // 🔔 Emit notify
+      if (global._io) {
+        global._io.emit('new_manga', {
+          id,
+          title,
+          coverUrl
+        });
+        console.log(`📢 [Socket] Notified new manga: ${title}`);
+      }
+
       console.log(`✅ [CRON] Đã sync manga: ${title}`);
     }
 
@@ -50,30 +60,7 @@ const crawlMangaDex = async () => {
   }
 };
 
-
-await Manga.updateOne(
-  { mangaDexId: id },
-  { $set: { mangaDexId: id, title, description, coverUrl } },
-  { upsert: true }
-);
-
-// 🔔 Emit notify
-if (global._io) {
-  global._io.emit('new_manga', {
-    id,
-    title,
-    coverUrl
-  });
-  console.log(`📢 [Socket] Notified new manga: ${title}`);
-}
-
-console.log(`✅ [CRON] Đã sync manga: ${title}`);
-
-
-// ✅ Export ra hàm khởi chạy
 module.exports.start = () => {
   console.log('⏰ [CRON] Scheduler đã bật!');
   cron.schedule('*/30 * * * *', crawlMangaDex);
 };
-
-

@@ -1,6 +1,6 @@
 
 const router = require('express').Router();
-const { getMangaList, getMangaDetail, searchManga, filterManga } = require('../controllers/manga.controller');
+const { getMangaList, getMangaDetail, searchManga, filterManga ,getMangaByGenre} = require('../controllers/manga.controller');
 
 router.get('/', getMangaList);
 router.get('/:id', getMangaDetail);
