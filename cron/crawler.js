@@ -1,8 +1,7 @@
 const axios = require('axios');
 const cron = require('node-cron');
-const Manga = require('../models/Manga'); // Model MongoDB
+const Manga = require('../models/Manga'); 
 
-// Hàm crawl MangaDex → lưu MongoDB
 const crawlMangaDex = async () => {
   console.log('🔄 [CRON] Bắt đầu crawl MangaDex...');
   try {
@@ -11,10 +10,10 @@ const crawlMangaDex = async () => {
         limit: 20,
         offset: 0,
         availableTranslatedLanguage: 'en',
-        order: { latestUploadedChapter: 'desc' }
+        'order[latestUploadedChapter]': 'desc'
       },
       headers: {
-        'User-Agent': 'MyMangaApp/1.0',
+        'User-Agent': 'MyMangaApp/1.0 (https://yourdomain.com) Contact: admin@yourdomain.com',
         'Accept': 'application/json'
       }
     });
@@ -32,22 +31,21 @@ const crawlMangaDex = async () => {
         ? `https://uploads.mangadex.org/covers/${id}/${cover.attributes.fileName}.256.jpg`
         : '';
 
-      // Upsert: nếu đã có thì update
-      const result = await Manga.updateOne(
-        { mangaDexId: id },
+      await Manga.updateOne(
+        { mangaDexId: id }, // 👈 Đúng filter
         {
           mangaDexId: id,
           title,
           description,
           coverUrl
         },
-        { upsert: true }
+        { upsert: true, strict: true }
       );
 
-      console.log(`✅ [CRON] Đã sync manga: ${title} (${id})`);
+      console.log(`✅ [CRON] Synced: ${title} (${id})`);
     }
 
-    console.log(`🎉 [CRON] Crawl MangaDex OK! Tổng cộng ${mangas.length} manga ✅`);
+    console.log(`🎉 [CRON] Crawl MangaDex OK! Đã sync ${mangas.length} manga ✅`);
   } catch (err) {
     if (err.response) {
       console.error('[CRON] MangaDex API lỗi:', err.response.status, err.response.data);
@@ -55,13 +53,10 @@ const crawlMangaDex = async () => {
       console.error('[CRON] Lỗi crawl:', err);
     }
   }
-};      
+};
 
-// Setup cron job: chạy mỗi 30 phút
-cron.schedule('*/30 * * * *', () => {
-  crawlMangaDex();
-});
-
+// Cron job mỗi 30 phút
+cron.schedule('*/30 * * * *', crawlMangaDex);
 console.log('⏰ [CRON] Scheduler đã bật!');
 
-module.exports = crawlMangaDex; // Cho phép import chạy tay nếu cần
+module.exports = crawlMangaDex;
