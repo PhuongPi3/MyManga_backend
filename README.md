@@ -9,11 +9,11 @@ Welcome to the backend service of **MyManga** – a modern manga reader web appl
 * 🔒 **Authentication** – Secure registration, login, and JWT-based authentication.
 * 📚 **Manga Management** – Automatically crawl and store manga from **MangaDex**.
 * 📖 **Chapters** – Fetch chapters by manga and read seamlessly using the MangaDex At-Home server.
-* 🔍 **Search & Filter** – Find manga by title, filter by status, tags, or genres.
+* 🔍 **Search & Filter** – Find manga by title, filter by status, genres.
 * 📌 **Genre Handling** – Manage and organize manga genres.
 * ⭐ **Follow System** – Users can follow or unfollow their favorite manga titles.
 * 🕒 **Reading History** – Keep track of what users have read.
-* 📢 **Notifications** – Get notified about new chapters of followed manga (web-only).
+* 📢 **Notifications** – Get notified about new chapters of followed manga.
 * 🧩 **Recommendations** – Suggest similar manga based on user interests and follows.
 * 🔑 **Admin Panel** – Full CRUD for managing manga, chapters, genres, and users.
 * ⚡ **Performance Optimizations** – Integrate caching with Redis and schedule regular crawls using cron jobs.
