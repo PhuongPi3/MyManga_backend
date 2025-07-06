@@ -1,11 +1,10 @@
-// cron/crawler.js
 const axios = require('axios');
 const cron = require('node-cron');
-const Manga = require('../models/Manga'); // model MongoDB
+const Manga = require('../models/Manga'); // Model MongoDB
 
 // Hàm crawl MangaDex → lưu MongoDB
 const crawlMangaDex = async () => {
-  console.log('[CRON] Bắt đầu crawl MangaDex...');
+  console.log('🔄 [CRON] Bắt đầu crawl MangaDex...');
   try {
     const response = await axios.get('https://api.mangadex.org/manga', {
       params: {
@@ -21,6 +20,7 @@ const crawlMangaDex = async () => {
     });
 
     const mangas = response.data.data;
+    console.log(`ℹ️ [CRON] Tìm thấy ${mangas.length} manga`);
 
     for (const item of mangas) {
       const id = item.id;
@@ -33,7 +33,7 @@ const crawlMangaDex = async () => {
         : '';
 
       // Upsert: nếu đã có thì update
-      await Manga.updateOne(
+      const result = await Manga.updateOne(
         { mangaDexId: id },
         {
           mangaDexId: id,
@@ -43,16 +43,17 @@ const crawlMangaDex = async () => {
         },
         { upsert: true }
       );
+
+      console.log(`✅ [CRON] Đã sync manga: ${title} (${id})`);
     }
 
-    console.log(`[CRON] Crawl MangaDex OK! Đã sync ${mangas.length} manga ✅`);
+    console.log(`🎉 [CRON] Crawl MangaDex OK! Tổng cộng ${mangas.length} manga ✅`);
   } catch (err) {
     if (err.response) {
-  console.error('[CRON] MangaDex API lỗi:', err.response.status, err.response.data);
+      console.error('[CRON] MangaDex API lỗi:', err.response.status, err.response.data);
     } else {
-    console.error('[CRON] Lỗi crawl:', err);
+      console.error('[CRON] Lỗi crawl:', err);
     }
-
   }
 };
 
@@ -61,4 +62,6 @@ cron.schedule('*/30 * * * *', () => {
   crawlMangaDex();
 });
 
-console.log('[CRON] Scheduler đã bật!');
+console.log('⏰ [CRON] Scheduler đã bật!');
+
+module.exports = crawlMangaDex; // Cho phép import chạy tay nếu cần

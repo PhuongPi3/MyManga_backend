@@ -1,8 +1,7 @@
-
 const mongoose = require('mongoose');
 
 const mangaSchema = new mongoose.Schema({
-  mangaDexId: String,
+  mangaDexId: { type: String, unique: true }, // BẮT BUỘC unique key
   title: String,
   description: String,
   coverUrl: String,
