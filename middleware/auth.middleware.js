@@ -1,20 +1,19 @@
-
 const jwt = require('jsonwebtoken');
 
 exports.verifyToken = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Không có token' });
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'No token provided' });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
-  } catch {
-    res.status(401).json({ error: 'Token không hợp lệ' });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
   }
 };
 
 exports.isAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') return next();
-  return res.status(403).json({ message: 'Forbidden' });
+  if (req.user.roles.includes('Admin')) return next();
+  res.status(403).json({ error: 'No permission' });
 };

@@ -32,6 +32,8 @@ app.use('/api/chapter', require('./routes/chapter.routes'));
 app.use('/api/user', require('./routes/user.routes'));
 app.use('/api/comment', require('./routes/comment.routes'));
 app.use('/api/genre', require('./routes/genre.routes'));
+app.use('/api/admin', require('./routes/admin.routes'));
+
 
 // ERROR HANDLER
 const { errorHandler } = require('./middleware/error.middleware');
@@ -49,3 +51,5 @@ crawlMangaDex.start();
 // SERVER
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+

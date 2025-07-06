@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -18,5 +17,7 @@ const userSchema = new mongoose.Schema({
   theme: { type: String, default: 'light' },
   oauthProvider: String
 }, { timestamps: true });
+
+userSchema.index({ _id: 1, 'history.mangaId': 1 });
 
 module.exports = mongoose.model('User', userSchema);
