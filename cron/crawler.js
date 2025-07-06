@@ -55,7 +55,7 @@ const crawlMangaDex = async () => {
       console.error('[CRON] Lỗi crawl:', err);
     }
   }
-};
+};      
 
 // Setup cron job: chạy mỗi 30 phút
 cron.schedule('*/30 * * * *', () => {
