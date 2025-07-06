@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const syncMangaDex = require('./cron/syncMangaDex');
 
 // Load env
 dotenv.config();
@@ -33,4 +34,3 @@ require('./cron/syncMangaDex');
 const { errorHandler } = require('./middleware/error.middleware');
 app.use(errorHandler);
 
-require('./cron/syncMangaDex'); // 🎯 Chỉ cần require!
