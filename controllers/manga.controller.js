@@ -4,6 +4,13 @@ const redisClient = require('../config/redis');
 
 exports.getMangaList = async (req, res) => {
   try {
+    const cacheKey = 'manga_list';
+    const cacheData = await redisClient.get(cacheKey);
+      if (cacheData) {
+          console.log('✅ Cache hit!');
+          return res.json(JSON.parse(cacheData));
+    }
+
     const { data } = await axios.get('https://api.mangadex.org/manga', {
       params: { limit: 20 } // VD: limit, sort
     });
