@@ -5,7 +5,7 @@ const Manga = require('../models/Manga');
 const crawlMangaDex = async () => {
   console.log('🔄 [CRON] Bắt đầu crawl MangaDex...');
   try {
-    const response = await axios.get(`${process.env.MANGADEX_API}/manga`, {
+    const response = await axios.get('https://api.mangadex.org/manga', {
       params: {
         limit: 20,
         offset: 0,
