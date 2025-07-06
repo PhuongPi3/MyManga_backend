@@ -3,7 +3,6 @@ const Manga = require('../models/Manga');
 
 exports.getMangaList = async (req, res) => {
   try {
-     res.json({ message: 'API manga hoạt động OK!' });
     const { data } = await axios.get('https://api.mangadex.org/manga', {
       params: { limit: 20 } // VD: limit, sort
     });
