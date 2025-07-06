@@ -1,19 +1,21 @@
-// /config/redis.js
-
+// config/redis.js
 const Redis = require('ioredis');
 
-const redisClient = new Redis({
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: process.env.REDIS_PORT || 6379,
-  password: process.env.REDIS_PASSWORD || undefined
-});
+let redisClient;
 
-redisClient.on('connect', () => {
-  console.log('✅ Redis connected!');
-});
-
-redisClient.on('error', (err) => {
-  console.error('❌ Redis error:', err);
-});
+if (process.env.NODE_ENV === 'production') {
+  redisClient = new Redis({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD
+  });
+} else {
+  console.log('🔸 Redis mock: Local mode.');
+  redisClient = {
+    get: async () => null,
+    set: async () => null,
+    on: () => {},
+  };
+}
 
 module.exports = redisClient;
