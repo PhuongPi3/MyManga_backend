@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cron = require('node-cron');
-const Manga = require('../models/Manga'); 
+const Manga = require('../models/Manga.js'); 
 
 const crawlMangaDex = async () => {
   console.log('🔄 [CRON] Bắt đầu crawl MangaDex...');
