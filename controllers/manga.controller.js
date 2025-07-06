@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Manga = require('../models/Manga');
+const redisClient = require('../config/redis');
 
 exports.getMangaList = async (req, res) => {
   try {
@@ -50,4 +51,26 @@ exports.filterManga = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+
+exports.getMangaByGenre = async (req, res) => {
+  try {
+    const { genreId } = req.params;
+    const { data } = await axios.get('https://api.mangadex.org/manga', {
+      params: {
+        includedTags: [genreId],
+        limit: 20
+      }
+    });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.recommendManga = async (req, res) => {
+  const { genreId } = req.query;
+  const mangas = await Manga.find({ tags: genreId }).limit(10);
+  res.json(mangas);
 };

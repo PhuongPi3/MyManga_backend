@@ -13,3 +13,8 @@ exports.verifyToken = (req, res, next) => {
     res.status(401).json({ error: 'Token không hợp lệ' });
   }
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') return next();
+  return res.status(403).json({ message: 'Forbidden' });
+};

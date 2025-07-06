@@ -6,5 +6,6 @@ router.get('/', getMangaList);
 router.get('/:id', getMangaDetail);
 router.get('/search', searchManga);
 router.get('/filter', filterManga);
+router.get('/genre/:genreId', getMangaByGenre); 
 
 module.exports = router;
