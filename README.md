@@ -13,15 +13,25 @@
 
 
 manga-backend/
+
 ├── server.js
+
 ├── config/db.js
+
 ├── routes/
+
 ├── controllers/
+
 ├── models/
+
 ├── middleware/
+
 ├── cron/
+
 ├── .env
+
 ├── package.json
+
 
 ## 🔑 Env Example
 MONGO_URI=mongodb+srv://:@cluster.mongodb.net/dbname
