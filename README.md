@@ -1,77 +1,92 @@
 # 📚 MyManga Backend
 
-## 🚀 Tech Stack
-
-- Node.js + Express
-- MongoDB Atlas
-- Railway deploy
-- JWT Auth
-- Proxy MangaDex API (tuân thủ policy)
-- Cron job update
-
-## 📂 Structure
-
-
-manga-backend/
-
-├── server.js
-
-├── config/db.js
-
-├── routes/
-
-├── controllers/
-
-├── models/
-
-├── middleware/
-
-├── cron/
-
-├── .env
-
-├── package.json
-
-
-## 🔑 Env Example
-MONGO_URI=mongodb+srv://:@cluster.mongodb.net/dbname
-JWT_SECRET=supersecret
-
-## ⚙️ Scripts
-
-- `npm run dev` — Chạy dev mode với nodemon
-- `npm start` — Chạy production
-
-## ✅ Main API
-
-| Method | Endpoint | Mô tả |
-| ------ | -------- | ----- |
-| POST | /api/auth/register | Đăng ký |
-| POST | /api/auth/login | Đăng nhập |
-| GET | /api/manga | Lấy list manga |
-| GET | /api/manga/:id | Chi tiết manga |
-| GET | /api/chapter/:mangaId | List chapter |
-| GET | /api/chapter/read/:id | Load pages |
-| POST | /api/user/follow | Theo dõi truyện |
-| GET | /api/user/library | Thư viện đã theo dõi |
-| GET | /api/user/history | Lịch sử đọc |
-| POST | /api/user/history | Update vị trí đọc |
-| POST | /api/comment | Tạo comment |
-| GET | /api/comment/:mangaId | Lấy comment |
-| DELETE | /api/comment/:id | Xóa comment |
-| PUT | /api/comment/:id | Sửa comment |
-
-## 🛡️ Policy
-
-- Không lưu ảnh chapter.
-- Chỉ lưu meta (title, desc).
-- Lấy dữ liệu qua MangaDex API.
+Welcome to the backend service of **MyManga** – a modern manga reader web application built with **Node.js**, **Express**, and **MongoDB**. Deployed effortlessly using **Railway**.
 
 ---
 
-**✅ Railway deploy → auto build**
-**✅ Vercel deploy frontend**
+## ✅ Key Features
+
+* 🔒 **Authentication** – Secure registration, login, and JWT-based authentication.
+* 📚 **Manga Management** – Automatically crawl and store manga from **MangaDex**.
+* 📖 **Chapters** – Fetch chapters by manga and read seamlessly using the MangaDex At-Home server.
+* 🔍 **Search & Filter** – Find manga by title, filter by status, genres.
+* 📌 **Genre Handling** – Manage and organize manga genres.
+* ⭐ **Follow System** – Users can follow or unfollow their favorite manga titles.
+* 🕒 **Reading History** – Keep track of what users have read.
+* 📢 **Notifications** – Get notified about new chapters of followed manga.
+* 🧩 **Recommendations** – Suggest similar manga based on user interests and follows.
+* 🔑 **Admin Panel** – Full CRUD for managing manga, chapters, genres, and users.
+* ⚡ **Performance Optimizations** – Integrate caching with Redis and schedule regular crawls using cron jobs.
 
 ---
 
-**Made by [Phương 🐸]**
+## 🚀 Getting Started
+
+1️⃣ **Clone this repository:**
+
+```bash
+git clone https://github.com/PhuongPi3/MyManga_backend.git
+```
+
+2️⃣ **Install dependencies:**
+
+```bash
+npm install
+```
+
+3️⃣ **Configure environment variables:**
+Create a `.env` file with the following content:
+
+```env
+MONGO_URI=<Your MongoDB URI>
+PORT=5000
+MANGADEX_API=https://api.mangadex.org
+```
+
+4️⃣ **Run the server:**
+
+```bash
+npm start
+```
+
+The backend will start at: `http://localhost:5000/`
+
+---
+
+## 📂 Project Structure
+
+```
+backend/
+ ├── config/         # Database and app configuration
+ ├── controllers/    # Business logic
+ ├── models/         # Database schemas
+ ├── routes/         # API endpoints
+ ├── cron/           # Scheduled jobs
+ ├── middleware/     # Middleware functions
+ ├── server.js       # Entry point
+ ├── .env            # Environment variables
+ └── package.json
+```
+
+---
+
+## 📝 Special Thanks
+
+This project utilizes the **MangaDex API** to crawl and deliver manga data.
+We fully respect and follow the **MangaDex Terms of Service** and **Fair Use Policy**.
+All manga content belongs to their original creators and scanlation teams.
+Please consider supporting the official releases to help the creators!
+
+Visit [MangaDex.org](https://mangadex.org) to learn more.
+
+---
+
+## 🔗 License
+
+This project is intended **for educational purposes only** and is **not for commercial use**.
+
+---
+
+✨ **Happy reading!** 📖
+
+---
