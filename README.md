@@ -83,14 +83,6 @@ cp .env.example .env
 npm run dev
 ```
 
-### 3️⃣ Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
 ---
 
 ## 🌐 Deploy Free
