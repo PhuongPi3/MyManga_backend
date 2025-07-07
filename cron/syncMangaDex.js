@@ -9,7 +9,7 @@ const crawlMangaDex = async () => {
       params: {
         limit: 20,
         offset: 0,
-        availableTranslatedLanguage: 'en',
+        availableTranslatedLanguage: ['en'],
         order: { latestUploadedChapter: 'desc' }
       },
       headers: {
