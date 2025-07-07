@@ -1,92 +1,131 @@
-# 📚 MyManga Backend
+# 📚 Manga Reader — Proxy MangaDex
 
-Welcome to the backend service of **MyManga** – a modern manga reader web application built with **Node.js**, **Express**, and **MongoDB**. Deployed effortlessly using **Railway**.
-
----
-
-## ✅ Key Features
-
-* 🔒 **Authentication** – Secure registration, login, and JWT-based authentication.
-* 📚 **Manga Management** – Automatically crawl and store manga from **MangaDex**.
-* 📖 **Chapters** – Fetch chapters by manga and read seamlessly using the MangaDex At-Home server.
-* 🔍 **Search & Filter** – Find manga by title, filter by status, genres.
-* 📌 **Genre Handling** – Manage and organize manga genres.
-* ⭐ **Follow System** – Users can follow or unfollow their favorite manga titles.
-* 🕒 **Reading History** – Keep track of what users have read.
-* 📢 **Notifications** – Get notified about new chapters of followed manga.
-* 🧩 **Recommendations** – Suggest similar manga based on user interests and follows.
-* 🔑 **Admin Panel** – Full CRUD for managing manga, chapters, genres, and users.
-* ⚡ **Performance Optimizations** – Integrate caching with Redis and schedule regular crawls using cron jobs.
+> Website truyện tranh online — sử dụng API MangaDex, **không lưu ảnh gốc**, tuân thủ Terms of Use.
 
 ---
 
-## 🚀 Getting Started
+## 📌 Mục tiêu
 
-1️⃣ **Clone this repository:**
+- Xây dựng **web app đọc truyện tranh** miễn phí.
+- **Proxy API** từ MangaDex, hiển thị ảnh trực tiếp qua CDN.
+- Cho phép user **đăng ký, đăng nhập**, **theo dõi**, **xem lịch sử**.
+- Lưu **metadata** (thông tin cơ bản) vào MongoDB Atlas.
+- Deploy **100% miễn phí** với Railway + Vercel.
 
-```bash
-git clone https://github.com/PhuongPi3/MyManga_backend.git
+---
+
+## 🚀 Công nghệ
+
+| Thành phần | Công nghệ |
+|------------|------------|
+| **Backend** | Node.js + Express |
+| **Database** | MongoDB Atlas (free tier) |
+| **Frontend** | React.js |
+| **Auth** | JWT + bcrypt |
+| **API Client** | axios |
+| **Deploy Backend** | Railway / Render |
+| **Deploy Frontend** | Vercel |
+| **Quản lý code** | GitHub |
+
+---
+
+## 🔑 Chức năng chính
+
+✅ Xem danh sách truyện  
+✅ Tìm kiếm, lọc, chi tiết truyện  
+✅ Đọc chapter (ảnh load trực tiếp MangaDex)  
+✅ Đăng ký, đăng nhập JWT  
+✅ Theo dõi truyện  
+✅ Lịch sử đọc  
+✅ Giao diện responsive  
+✅ Proxy API tuân thủ Terms of Use  
+✅ Không lưu ảnh gốc
+
+---
+
+## 🗂️ Cấu trúc thư mục
+
+```plaintext
+my-manga-reader/
+ ├── backend/
+ │   ├── server.js
+ │   ├── routes/
+ │   ├── controllers/
+ │   ├── models/
+ │   ├── config/
+ │   ├── .env.example
+ ├── frontend/
+ │   ├── public/
+ │   ├── src/
+ │   ├── package.json
+ ├── README.md
 ```
 
-2️⃣ **Install dependencies:**
+---
+
+## ⚙️ Cài đặt
+
+### 1️⃣ Clone
 
 ```bash
+git clone https://github.com/yourusername/my-manga-reader.git
+cd my-manga-reader
+```
+
+### 2️⃣ Backend
+
+```bash
+cd backend
 npm install
+# Copy file env mẫu
+cp .env.example .env
+# Chỉnh biến môi trường: MongoDB URI, JWT_SECRET
+npm run dev
 ```
 
-3️⃣ **Configure environment variables:**
-Create a `.env` file with the following content:
-
-```env
-MONGO_URI=<Your MongoDB URI>
-PORT=5000
-MANGADEX_API=https://api.mangadex.org
-```
-
-4️⃣ **Run the server:**
+### 3️⃣ Frontend
 
 ```bash
-npm start
-```
-
-The backend will start at: `http://localhost:5000/`
-
----
-
-## 📂 Project Structure
-
-```
-backend/
- ├── config/         # Database and app configuration
- ├── controllers/    # Business logic
- ├── models/         # Database schemas
- ├── routes/         # API endpoints
- ├── cron/           # Scheduled jobs
- ├── middleware/     # Middleware functions
- ├── server.js       # Entry point
- ├── .env            # Environment variables
- └── package.json
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
 
-## 📝 Special Thanks
+## 🌐 Deploy Free
 
-This project utilizes the **MangaDex API** to crawl and deliver manga data.
-We fully respect and follow the **MangaDex Terms of Service** and **Fair Use Policy**.
-All manga content belongs to their original creators and scanlation teams.
-Please consider supporting the official releases to help the creators!
-
-Visit [MangaDex.org](https://mangadex.org) to learn more.
+- **Database:** MongoDB Atlas Free Cluster.
+- **Backend:** Railway / Render (kết nối GitHub repo).
+- **Frontend:** Vercel (tự động build từ repo).
+- **Tên miền:** Railway/Render subdomain hoặc Freenom.
 
 ---
 
-## 🔗 License
+## ✅ Tuân thủ MangaDex Policy
 
-This project is intended **for educational purposes only** and is **not for commercial use**.
+- **Không crawl & lưu ảnh chapter**.
+- Ảnh chapter **load trực tiếp từ CDN MangaDex**.
+- Chỉ lưu **metadata** (tên, mô tả, ID).
+- Ghi rõ credit **MangaDex** & nhóm dịch.
+- Tôn trọng **API rate limit**.
+- Không kinh doanh nội dung scan.
 
 ---
 
-✨ **Happy reading!** 📖
+## ✨ Ghi chú
+
+- Dự án **Open Source** — bạn có thể fork, cải tiến, tự host.
+- Code gốc hoàn toàn miễn phí.
+- Mọi vấn đề pháp lý bạn cần tự chịu trách nhiệm khi deploy.
 
 ---
+
+## ❤️ Đóng góp
+
+Pull request, issue & feedback luôn hoan nghênh!
+
+---
+
+**Happy reading!** 🚀📚✨
+```
