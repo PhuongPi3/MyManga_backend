@@ -7,5 +7,6 @@ router.get('/:id', getMangaDetail);
 router.get('/search', searchManga);
 router.get('/filter', filterManga);
 router.get('/genre/:genreId', getMangaByGenre); 
+router.get('/recommend/history', verifyToken, mangaController.recommendByHistory);
 
 module.exports = router;
