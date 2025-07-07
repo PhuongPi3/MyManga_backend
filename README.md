@@ -46,7 +46,7 @@
 ## 🗂️ Cấu trúc thư mục
 
 ```plaintext
-my-manga-reader/
+mymanga/
  ├── backend/
  │   ├── server.js
  │   ├── routes/
@@ -54,11 +54,7 @@ my-manga-reader/
  │   ├── models/
  │   ├── config/
  │   ├── .env.example
- ├── frontend/
- │   ├── public/
- │   ├── src/
- │   ├── package.json
- ├── README.md
+ 
 ```
 
 ---
@@ -68,7 +64,7 @@ my-manga-reader/
 ### 1️⃣ Clone
 
 ```bash
-git clone https://github.com/yourusername/my-manga-reader.git
+git clone https://github.com/PhuongPi3/MyManga_backend.git
 cd my-manga-reader
 ```
 
