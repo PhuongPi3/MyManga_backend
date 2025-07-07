@@ -10,7 +10,7 @@
 - **Proxy API** từ MangaDex, hiển thị ảnh trực tiếp qua CDN.
 - Cho phép user **đăng ký, đăng nhập**, **theo dõi**, **xem lịch sử**.
 - Lưu **metadata** (thông tin cơ bản) vào MongoDB Atlas.
-- Deploy **100% miễn phí** với Railway + Vercel.
+- Deploy **100% miễn phí** với Railway.
 
 ---
 
@@ -20,11 +20,9 @@
 |------------|------------|
 | **Backend** | Node.js + Express |
 | **Database** | MongoDB Atlas (free tier) |
-| **Frontend** | React.js |
 | **Auth** | JWT + bcrypt |
 | **API Client** | axios |
-| **Deploy Backend** | Railway / Render |
-| **Deploy Frontend** | Vercel |
+| **Deploy Backend** | Railway |
 | **Quản lý code** | GitHub |
 
 ---
