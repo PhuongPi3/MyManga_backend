@@ -1,19 +1,17 @@
-const routerH = require('express').Router();
-const ReadingHistory = require('../models/ReadingHistory');
+const router = require('express').Router();
+const History = require('../models/History');
+const { verifyToken } = require('../middleware/auth.middleware');
 
-routerH.post('/:mangaId/:chapterId', async (req, res) => {
-  const { lastPage } = req.body;
-  await ReadingHistory.findOneAndUpdate(
-    { userId: req.user._id, mangaId: req.params.mangaId },
-    { chapterId: req.params.chapterId, lastPage },
-    { upsert: true }
-  );
-  res.json({ message: 'History saved' });
+router.post('/:mangaId/:chapterId', verifyToken, async (req, res) => {
+  // ...
 });
 
-routerH.get('/', async (req, res) => {
-  const history = await ReadingHistory.find({ userId: req.user._id }).populate('mangaId');
-  res.json(history);
+router.get('/', verifyToken, async (req, res) => {
+  // ...
 });
 
-module.exports = routerH;
+router.delete('/:mangaId', verifyToken, async (req, res) => {
+  // ...
+});
+
+module.exports = router;
