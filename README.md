@@ -71,9 +71,7 @@ cd my-manga-reader
 ```bash
 cd backend
 npm install
-# Copy file env mẫu
-cp .env.example .env
-# Chỉnh biến môi trường: MongoDB URI, JWT_SECRET
+#tao .env
 npm run dev
 ```
 
@@ -82,9 +80,8 @@ npm run dev
 ## 🌐 Deploy Free
 
 - **Database:** MongoDB Atlas Free Cluster.
-- **Backend:** Railway / Render (kết nối GitHub repo).
-- **Frontend:** Vercel (tự động build từ repo).
-- **Tên miền:** Railway/Render subdomain hoặc Freenom.
+- **Backend:** Railway (kết nối GitHub repo).
+- **Tên miền:** Railway subdomain hoặc Freenom.
 
 ---
 
